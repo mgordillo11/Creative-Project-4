@@ -27,6 +27,10 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url(../../images/front-yard-background.jpeg);
+  background-size: auto;
+  background-size: cover;
 }
 
 nav {

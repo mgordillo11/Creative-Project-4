@@ -173,6 +173,7 @@ export default {
 }
 .heading {
   display: flex;
+  justify-content: center;
   margin-bottom: 20px;
   margin-top: 20px;
 }
@@ -183,6 +184,7 @@ export default {
 .add,
 .edit {
   display: flex;
+  justify-content: center;
 }
 .circle {
   border-radius: 50%;
