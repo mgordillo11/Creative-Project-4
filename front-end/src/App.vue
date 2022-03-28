@@ -5,6 +5,18 @@
       <router-link to="/about">About</router-link>
     </nav>
     <router-view />
+
+    <div class="github-container">
+      <ul class="social-links">
+        <li>
+          <a
+            href="https://github.com/mgordillo11/Creative-Project-4"
+            target="blank"
+            ><i class="fab fa-github"></i
+          ></a>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -28,5 +40,19 @@ nav a {
 
 nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.github-container {
+  display: flex;
+  justify-content: center;
+  font-size: 100px;
+}
+
+.fab {
+  color: black;
+}
+
+.github-container li {
+  list-style: none;
 }
 </style>
