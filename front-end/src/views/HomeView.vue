@@ -1,15 +1,13 @@
 <template>
-<div class="home">
-  <section class="image-gallery">
-    <div class="image" v-for="item in items" :key="item.id">
-      <h2>{{item.title}}</h2>
-      <h5>{{item.description}}</h5>
-      <img :src="item.path" />
-    </div>
-  </section>
-
-</div>
-
+  <div class="home">
+    <section class="image-gallery">
+      <div class="image" v-for="item in items" :key="item.id">
+        <h2>{{ item.title }}</h2>
+        <h5>{{ item.description }}</h5>
+        <img :src="item.path" />
+      </div>
+    </section>
+  </div>
 </template>
 
 <style scoped>
@@ -55,9 +53,9 @@
 
 <script>
 // @ is an alias to /src
-import axios from 'axios';
+import axios from "axios";
 export default {
-  name: 'Home',
+  name: "HomeView",
   data() {
     return {
       items: [],
@@ -70,8 +68,8 @@ export default {
     async getItems() {
       try {
         let response = await axios.get("/api/items");
-	this.items = response.data;
-	return true;
+        this.items = response.data;
+        return true;
       } catch (error) {
         console.log(error);
       }
