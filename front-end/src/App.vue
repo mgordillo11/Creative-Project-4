@@ -53,7 +53,7 @@ nav a.router-link-exact-active {
 }
 
 .fab {
-  color: black;
+  color: white;
 }
 
 .github-container li {

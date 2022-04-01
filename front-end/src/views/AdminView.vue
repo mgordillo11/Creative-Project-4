@@ -29,7 +29,6 @@
           <img :src="addItem.path" />
         </div>
       </div>
-
       <div class="heading">
         <div class="circle">2</div>
         <h2>Edit/Delete Product</h2>
@@ -68,7 +67,67 @@
       </div>
     </div>
     <div v-else>
-      <p>Else works</p>
+      <div class="heading">
+        <div class="circle">1</div>
+        <h2>Add Landscaping Service</h2>
+      </div>
+      <div class="add">
+        <div class="form">
+          <div>
+            <input v-model="title" placeholder="Service Title" />
+          </div>
+          <div>
+            <input v-model="description" placeholder="Service Description" />
+          </div>
+          <div>
+            <input v-model="price" placeholder="Estimate on Site" />
+          </div>
+          <p></p>
+          <input type="file" name="photo" @change="fileChanged" />
+          <button @click="upload">Upload</button>
+        </div>
+        <div class="upload" v-if="addItem">
+          <h2>{{ addItem.title }}</h2>
+          <h2>{{ addItem.description }}</h2>
+          <img :src="addItem.path" />
+        </div>
+      </div>
+      <div class="heading">
+        <div class="circle">2</div>
+        <h2>Edit/Delete Landscaping Service</h2>
+      </div>
+      <div class="edit">
+        <div class="form">
+          <input v-model="findTitle" placeholder="Search" />
+          <div class="suggestions" v-if="suggestions.length > 0">
+            <div
+              class="suggestion"
+              v-for="s in suggestions"
+              :key="s.id"
+              @click="selectItem(s)"
+            >
+              {{ s.title }}
+            </div>
+          </div>
+        </div>
+        <div class="upload" v-if="findItem">
+          <div>
+            <input v-model="findItem.title" />
+          </div>
+          <div>
+            <textarea v-model="findItem.description" />
+          </div>
+          <div>
+            <textarea v-model="findItem.price" />
+          </div>
+          <p></p>
+          <img :src="findItem.path" />
+        </div>
+        <div class="actions" v-if="findItem">
+          <button @click="deleteItem(findItem)">Delete</button>
+          <button @click="editItem(findItem)">Edit</button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -129,6 +188,7 @@ export default {
           title: this.title,
           path: r1.data.path,
           description: this.description,
+          price: this.price,
         });
         this.addItem = r2.data;
       } catch (error) {
@@ -167,6 +227,10 @@ export default {
 </script>
 
 <style scoped>
+.admin h1 {
+  color: white;
+}
+
 .image h2 {
   font-style: italic;
   font-size: 1em;
@@ -180,6 +244,7 @@ export default {
 .heading h2 {
   margin-top: 8px;
   margin-left: 10px;
+  color: white;
 }
 .add,
 .edit {
@@ -205,6 +270,7 @@ button {
 }
 .form {
   margin-right: 50px;
+  align-items: center;
 }
 /* Uploaded images */
 .upload h2 {
