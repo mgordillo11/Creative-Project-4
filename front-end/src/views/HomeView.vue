@@ -3,7 +3,8 @@
     <section class="image-gallery">
       <div class="image" v-for="item in items" :key="item.id">
         <h2>{{ item.title }}</h2>
-        <h5>{{ item.description }}</h5>
+        <h4>{{ item.description }}</h4>
+        <h5>{{ item.price }}</h5>
         <img :src="item.path" />
       </div>
     </section>
@@ -13,6 +14,17 @@
 <style scoped>
 .image h2 {
   font-style: italic;
+  color: white;
+}
+
+.image h4 {
+  font-style: italic;
+  color: white;
+}
+
+.image h5 {
+  font-style: italic;
+  color: white;
 }
 /* Masonry */
 *,

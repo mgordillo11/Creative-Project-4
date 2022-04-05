@@ -250,6 +250,7 @@ export default {
 .edit {
   display: flex;
   justify-content: center;
+  color: #fff;
 }
 .circle {
   border-radius: 50%;
@@ -275,6 +276,7 @@ button {
 /* Uploaded images */
 .upload h2 {
   margin: 0px;
+  color: white;
 }
 .upload img {
   max-width: 300px;
@@ -286,6 +288,7 @@ button {
 }
 .suggestion {
   min-height: 20px;
+  color: #fff;
 }
 .suggestion:hover {
   background-color: #5bdeff;
