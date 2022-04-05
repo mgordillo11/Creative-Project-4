@@ -1,131 +1,145 @@
 <template>
   <div class="admin">
     <h1>The Admin Page!</h1>
-    <button @click="managerSelection(true)">Product Management</button>
-    <button @click="managerSelection(false)">Service Management</button>
-    <div v-if="manageOption">
-      <div class="heading">
-        <div class="circle">1</div>
-        <h2>Add Landscaping Product</h2>
+    <div v-if="passwordStatus"></div>
+    <div v-else>
+      <div>
+        <textarea v-model="adminPassword" />
+        <button @click="passwordCheck()">Enter Admin Password</button>
       </div>
-      <div class="add">
-        <div class="form">
-          <div>
-            <input v-model="title" placeholder="Product Title" />
-          </div>
-          <div>
-            <input v-model="description" placeholder="Product Description" />
-          </div>
-          <div>
-            <input v-model="price" placeholder="Product Price" />
-          </div>
-          <p></p>
-          <input type="file" name="photo" @change="fileChanged" />
-          <button @click="upload">Upload</button>
+    </div>
+
+    <div v-if="passwordStatus">
+      <button @click="managerSelection(true)">Product Management</button>
+      <button @click="managerSelection(false)">Service Management</button>
+      <div v-if="manageOption">
+        <div class="heading">
+          <div class="circle">1</div>
+          <h2>Add Landscaping Product</h2>
         </div>
-        <div class="upload" v-if="addItem">
-          <h2>{{ addItem.title }}</h2>
-          <h2>{{ addItem.description }}</h2>
-          <img :src="addItem.path" />
+        <div class="add">
+          <div class="form">
+            <div>
+              <input v-model="title" placeholder="Product Title" />
+            </div>
+            <div>
+              <input v-model="description" placeholder="Product Description" />
+            </div>
+            <div>
+              <input v-model="price" placeholder="Product Price" />
+            </div>
+            <p></p>
+            <input type="file" name="photo" @change="fileChanged" />
+            <button @click="upload">Upload</button>
+          </div>
+          <div class="upload" v-if="addItem">
+            <h2>{{ addItem.title }}</h2>
+            <h2>{{ addItem.description }}</h2>
+            <img :src="addItem.path" />
+          </div>
         </div>
-      </div>
-      <div class="heading">
-        <div class="circle">2</div>
-        <h2>Edit/Delete Product</h2>
-      </div>
-      <div class="edit">
-        <div class="form">
-          <input v-model="findTitle" placeholder="Search" />
-          <div class="suggestions" v-if="suggestions.length > 0">
-            <div
-              class="suggestion"
-              v-for="s in suggestions"
-              :key="s.id"
-              @click="selectItem(s)"
-            >
-              {{ s.title }}
+        <div class="heading">
+          <div class="circle">2</div>
+          <h2>Edit/Delete Product</h2>
+        </div>
+        <div class="edit">
+          <div class="form">
+            <input v-model="findTitle" placeholder="Search" />
+            <div class="suggestions" v-if="suggestions.length > 0">
+              <div
+                class="suggestion"
+                v-for="s in suggestions"
+                :key="s.id"
+                @click="selectItem(s)"
+              >
+                {{ s.title }}
+              </div>
             </div>
           </div>
+          <div class="upload" v-if="findItem">
+            <div>
+              <input v-model="findItem.title" />
+            </div>
+            <div>
+              <textarea v-model="findItem.description" />
+            </div>
+            <div>
+              <textarea v-model="findItem.price" />
+            </div>
+            <p></p>
+            <img :src="findItem.path" />
+          </div>
+          <div class="actions" v-if="findItem">
+            <button @click="deleteItem(findItem)">Delete</button>
+            <button @click="editItem(findItem)">Edit</button>
+          </div>
         </div>
-        <div class="upload" v-if="findItem">
-          <div>
-            <input v-model="findItem.title" />
-          </div>
-          <div>
-            <textarea v-model="findItem.description" />
-          </div>
-          <div>
-            <textarea v-model="findItem.price" />
-          </div>
-          <p></p>
-          <img :src="findItem.path" />
+      </div>
+      <div v-else>
+        <div class="heading">
+          <div class="circle">1</div>
+          <h2>Add Landscaping Service</h2>
         </div>
-        <div class="actions" v-if="findItem">
-          <button @click="deleteItem(findItem)">Delete</button>
-          <button @click="editItem(findItem)">Edit</button>
+        <div class="add">
+          <div class="form">
+            <div>
+              <input v-model="title" placeholder="Service Title" />
+            </div>
+            <div>
+              <input v-model="description" placeholder="Service Description" />
+            </div>
+            <p></p>
+            <input type="file" name="photo" @change="fileChanged" />
+            <button @click="upload">Upload</button>
+          </div>
+          <div class="upload" v-if="addItem">
+            <h2>{{ addItem.title }}</h2>
+            <h2>{{ addItem.description }}</h2>
+            <img :src="addItem.path" />
+          </div>
+        </div>
+        <div class="heading">
+          <div class="circle">2</div>
+          <h2>Edit/Delete Landscaping Service</h2>
+        </div>
+        <div class="edit">
+          <div class="form">
+            <input v-model="findTitle" placeholder="Search" />
+            <div class="suggestions" v-if="suggestions.length > 0">
+              <div
+                class="suggestion"
+                v-for="s in suggestions"
+                :key="s.id"
+                @click="selectItem(s)"
+              >
+                {{ s.title }}
+              </div>
+            </div>
+          </div>
+          <div class="upload" v-if="findItem">
+            <div>
+              <input v-model="findItem.title" />
+            </div>
+            <div>
+              <textarea v-model="findItem.description" />
+            </div>
+            <div>
+              <textarea v-model="findItem.price" />
+            </div>
+            <p></p>
+            <img :src="findItem.path" />
+          </div>
+          <div class="actions" v-if="findItem">
+            <button @click="deleteItem(findItem)">Delete</button>
+            <button @click="editItem(findItem)">Edit</button>
+          </div>
         </div>
       </div>
     </div>
     <div v-else>
-      <div class="heading">
-        <div class="circle">1</div>
-        <h2>Add Landscaping Service</h2>
-      </div>
-      <div class="add">
-        <div class="form">
-          <div>
-            <input v-model="title" placeholder="Service Title" />
-          </div>
-          <div>
-            <input v-model="description" placeholder="Service Description" />
-          </div>
-          <div>
-            <input v-model="price" placeholder="Estimate on Site" />
-          </div>
-          <p></p>
-          <input type="file" name="photo" @change="fileChanged" />
-          <button @click="upload">Upload</button>
-        </div>
-        <div class="upload" v-if="addItem">
-          <h2>{{ addItem.title }}</h2>
-          <h2>{{ addItem.description }}</h2>
-          <img :src="addItem.path" />
-        </div>
-      </div>
-      <div class="heading">
-        <div class="circle">2</div>
-        <h2>Edit/Delete Landscaping Service</h2>
-      </div>
-      <div class="edit">
-        <div class="form">
-          <input v-model="findTitle" placeholder="Search" />
-          <div class="suggestions" v-if="suggestions.length > 0">
-            <div
-              class="suggestion"
-              v-for="s in suggestions"
-              :key="s.id"
-              @click="selectItem(s)"
-            >
-              {{ s.title }}
-            </div>
-          </div>
-        </div>
-        <div class="upload" v-if="findItem">
-          <div>
-            <input v-model="findItem.title" />
-          </div>
-          <div>
-            <textarea v-model="findItem.description" />
-          </div>
-          <div>
-            <textarea v-model="findItem.price" />
-          </div>
-          <p></p>
-          <img :src="findItem.path" />
-        </div>
-        <div class="actions" v-if="findItem">
-          <button @click="deleteItem(findItem)">Delete</button>
-          <button @click="editItem(findItem)">Edit</button>
+      <div v-if="adminPassword.length > 0 && initialPasswordStatus">
+        <div class="incorrectPass">
+          <p>Incorrect Password</p>
         </div>
       </div>
     </div>
@@ -142,12 +156,16 @@ export default {
       title: "",
       description: "",
       price: "",
+      adminPassword: "",
+      passwordStatus: false,
+      initialPasswordStatus: false,
       file: null,
       addItem: null,
       items: [],
       findTitle: "",
       findItem: null,
       manageOption: false,
+      suggestionsStatus: false,
     };
   },
   computed: {
@@ -155,7 +173,24 @@ export default {
       let items = this.items.filter((item) =>
         item.title.toLowerCase().startsWith(this.findTitle.toLowerCase())
       );
-      return items.sort((a, b) => a.title > b.title);
+      items = items.sort((a, b) => a.title > b.title);
+      if (this.suggestionsStatus) {
+        let serviceItems = [];
+        for (let i = 0; i < items.length; i++) {
+          if (items[i].price !== "service" && items[i].price !== "review") {
+            serviceItems.push(items[i]);
+          }
+        }
+        return serviceItems;
+      } else {
+        let serviceItems = [];
+        for (let i = 0; i < items.length; i++) {
+          if (items[i].price === "service") {
+            serviceItems.push(items[i]);
+          }
+        }
+        return serviceItems;
+      }
     },
   },
   methods: {
@@ -178,18 +213,36 @@ export default {
     },
     managerSelection(status) {
       this.manageOption = status;
+      this.suggestionsStatus = status;
+    },
+    passwordCheck() {
+      if (this.adminPassword === "password") {
+        this.passwordStatus = true;
+      } else {
+        this.initialPasswordStatus = true;
+      }
     },
     async upload() {
       try {
+        let r2;
         const formData = new FormData();
         formData.append("photo", this.file, this.file.name);
         let r1 = await axios.post("/api/photos", formData);
-        let r2 = await axios.post("/api/items", {
-          title: this.title,
-          path: r1.data.path,
-          description: this.description,
-          price: this.price,
-        });
+        if (this.suggestionsStatus) {
+          r2 = await axios.post("/api/items", {
+            title: this.title,
+            path: r1.data.path,
+            description: this.description,
+            price: this.price,
+          });
+        } else {
+          r2 = await axios.post("/api/items", {
+            title: this.title,
+            path: r1.data.path,
+            description: this.description,
+            price: "service",
+          });
+        }
         this.addItem = r2.data;
       } catch (error) {
         console.log(error);
@@ -276,7 +329,7 @@ button {
 /* Uploaded images */
 .upload h2 {
   margin: 0px;
-  color: white;
+  color: whi;
 }
 .upload img {
   max-width: 300px;
@@ -293,5 +346,9 @@ button {
 .suggestion:hover {
   background-color: #5bdeff;
   color: #fff;
+}
+
+.incorrectPass {
+  color: red;
 }
 </style>

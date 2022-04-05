@@ -1,9 +1,11 @@
 <template>
   <div id="app">
     <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/admin">Admin</router-link>
-      <router-link to="/review">Review</router-link>
+      <div class="router-container">
+        <router-link to="/">Home</router-link> |
+        <router-link to="/admin"> Admin Page</router-link> |
+        <router-link to="/review"> Review </router-link>
+      </div>
     </nav>
     <router-view />
 
@@ -59,5 +61,9 @@ nav a.router-link-exact-active {
 
 .github-container li {
   list-style: none;
+}
+
+.router-container {
+  justify-content: space-between;
 }
 </style>

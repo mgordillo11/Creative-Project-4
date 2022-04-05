@@ -11,6 +11,37 @@
   </div>
 </template>
 
+<script>
+// @ is an alias to /src
+import axios from "axios";
+export default {
+  name: "HomeView",
+  data() {
+    return {
+      items: [],
+    };
+  },
+  created() {
+    this.getItems();
+  },
+  methods: {
+    async getItems() {
+      try {
+        let response = await axios.get("/api/items");
+        for (let i = 0; i < response.data.length; i++) {
+          if (response.data[i].price !== "review") {
+            this.items.push(response.data[i]);
+          }
+        }
+        return true;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
+};
+</script>
+
 <style scoped>
 .image h2 {
   font-style: italic;
@@ -62,30 +93,3 @@
   }
 }
 </style>
-
-<script>
-// @ is an alias to /src
-import axios from "axios";
-export default {
-  name: "HomeView",
-  data() {
-    return {
-      items: [],
-    };
-  },
-  created() {
-    this.getItems();
-  },
-  methods: {
-    async getItems() {
-      try {
-        let response = await axios.get("/api/items");
-        this.items = response.data;
-        return true;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-  },
-};
-</script>
